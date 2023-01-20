@@ -3,7 +3,6 @@ import React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import Jumbotron from '../../components/cards/Jumbotron';
 import { useAuth } from '../../context/Auth';
 
 const Register = () => {
@@ -12,7 +11,10 @@ const Register = () => {
     const [email, setEmail] = useState("amir0@gmail.com");
     const [password, setPassword] = useState("12345678");
 
+    // my hook
     const [auth, setAuth ] = useAuth()
+    //hook
+
 
     const navigate = useNavigate();
     const handleSubmit = async (e) =>{
@@ -26,7 +28,7 @@ const Register = () => {
             // }
 
             const { data } = await axios.post(
-                `http://localhost:5000/api/v1/register`, {name, email, password,});
+                `/register`, {name, email, password,});
             console.log( data);
             if(data?.error){
                 toast.error(data.error)
@@ -48,17 +50,17 @@ const Register = () => {
 
     return (
         
-        <div className='text-light'>
-            <Jumbotron title="Register Page" />
+        <div className=''>
+            
             <div className="my-5 d-flex justify-content-center align-items-center ">
-                <div className="col-md-5 p-4 shadow-sm border rounded-5 border-primary bg-dark">
+                <div className="col-md-5 p-4 shadow-sm border rounded-5 border-primary bg-light">
                     <h2 className="text-center mb-4 text-primary">Register Form</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3 ">
                             <label for="exampleInputName" className="form-label">Name</label>
                             <input 
                                 type="text" 
-                                className="form-control border border-primary bg-dark text-light"
+                                className="form-control border border-primary"
                                 placeholder="Enter your name"
                                 id="exampleInputName" 
                                 aria-describedby="emailHelp" 
@@ -71,7 +73,7 @@ const Register = () => {
                             <label for="exampleInputEmail1" className="form-label">Email address</label>
                             <input 
                                 type="email" 
-                                className="form-control border border-primary bg-dark text-light" 
+                                className="form-control border border-primary" 
                                 placeholder="Enter your email"
                                 id="exampleInputEmail1" 
                                 aria-describedby="emailHelp" 
@@ -83,7 +85,7 @@ const Register = () => {
                             <label for="exampleInputPassword1" className="form-label">Password</label>
                             <input 
                                 type="password" 
-                                className="form-control border border-primary bg-dark text-light" 
+                                className="form-control border border-primary" 
                                 placeholder="Enter your password"
                                 id="exampleInputPassword1" 
                                 value={password}
@@ -102,21 +104,3 @@ const Register = () => {
 };
 
 export default Register;
-
-
-
-// import React from 'react';
-// import Jumbotron from '../../components/cards/Jumbotron';
-
-// const Register = () => {
-//     return (
-//         <div className='text-light'>
-//             <Jumbotron title="Register Page" />
-//         </div>
-//     );
-// };
-
-// export default Register;
-
-
-

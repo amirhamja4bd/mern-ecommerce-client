@@ -6,6 +6,10 @@ import Menu from './components/nav/Menu';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import HomePage from './pages/HomePage';
+import PrivetRoute from './components/routes/PrivetRoute';
+import Dashboard from './pages/user/Dashboard';
+import PageNotFound from './components/PageNotFound';
+import AdminDashboard from './pages/admin/Dashboard';
 
 function App() {
   return (
@@ -17,6 +21,12 @@ function App() {
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
+          <Route path='/dashboard' element={<PrivetRoute/>}>
+            <Route path='user' element={<Dashboard/>} />
+            <Route path='admin' element={<AdminDashboard/>} />
+          </Route>
+
+          <Route path='*' element={<PageNotFound/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

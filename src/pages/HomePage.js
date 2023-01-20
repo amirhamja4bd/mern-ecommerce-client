@@ -5,7 +5,7 @@ import { useAuth } from '../context/Auth';
 const HomePage = () => {
     const [auth, setAuth ] = useAuth()
     return (
-        <div className='text-light'>
+        <div className=''>
             <Jumbotron title="Home Page" />
             <pre>{JSON.stringify(auth , null, 4)}</pre>
         </div>
