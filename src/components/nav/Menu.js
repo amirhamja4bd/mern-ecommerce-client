@@ -10,7 +10,7 @@ const Menu = () => {
         <div>
             <Navbar className='header' collapseOnSelect expand="lg" bg="dark" variant="dark" >
                 <Container>
-                    <Navbar.Brand className='text-primary' href="/">  <i class="fa-brands fa-shopify"></i>  eShop</Navbar.Brand>
+                    <Navbar.Brand className='text-primary' href="/">  <i class="fa-brands fa-shopify"></i>  eShop  </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">

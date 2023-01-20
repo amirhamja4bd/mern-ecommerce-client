@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { Toaster } from "react-hot-toast";
 import Footer from './components/nav/Footer';
 import Menu from './components/nav/Menu';
 import Login from './pages/auth/Login';
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Menu></Menu>
+      <Toaster/>
         <Routes>
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/register' element={<Register/>} />
