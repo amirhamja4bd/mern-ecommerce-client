@@ -6,16 +6,16 @@ import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
 import Loading from './Loading';
 
-const PrivetRoute = () => {
+const AdminRoute = () => {
     //context
     const [auth, setAuth] = useAuth();
     //state
     const [ok, setOk] = useState();
 
     useEffect(()=>{
-        const authCheck = async ()=>{
-            const {data} = await axios.get(`/auth-check`);
-            // const {data} = await axios.get(`/auth-check`, {headers: {authorization:auth?.token}});
+        const adminCheck = async ()=>{
+            const {data} = await axios.get(`/admin-check`);
+            // const {data} = await axios.get(`/admin-check`, {headers: {authorization:auth?.token}});
             if(data.ok){
                 setOk(true);
             }
@@ -23,11 +23,11 @@ const PrivetRoute = () => {
                 setOk(false);
             }
         };
-        if(auth?.token) authCheck();
+        if(auth?.token) adminCheck();
     },[auth?.token]);
 
-    return ok ? <Outlet/> : <Loading></Loading>
+    return ok ? <Outlet/> : <Loading path="" />
 
 };
 
-export default PrivetRoute;
+export default AdminRoute;

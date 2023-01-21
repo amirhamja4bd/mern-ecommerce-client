@@ -10,6 +10,11 @@ import PrivetRoute from './components/routes/PrivetRoute';
 import Dashboard from './pages/user/Dashboard';
 import PageNotFound from './components/PageNotFound';
 import AdminDashboard from './pages/admin/Dashboard';
+import AdminRoute from './components/routes/AdminRoute';
+import Category from './pages/admin/Category';
+import Product from './pages/admin/Product';
+import Profile from './pages/user/Profile';
+import Orders from './pages/user/Orders';
 
 function App() {
   return (
@@ -21,9 +26,18 @@ function App() {
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
+
           <Route path='/dashboard' element={<PrivetRoute/>}>
             <Route path='user' element={<Dashboard/>} />
-            <Route path='admin' element={<AdminDashboard/>} />
+            <Route path='user/profile' element={<Profile/>} />
+            <Route path='user/orders' element={<Orders/>} />
+            
+          </Route>
+
+          <Route path='/dashboard' element={<AdminRoute/>}>
+          <Route path='admin' element={<AdminDashboard/>} />
+          <Route path='admin/category' element={<Category/>} />
+          <Route path='admin/product' element={<Product/>} />
           </Route>
 
           <Route path='*' element={<PageNotFound/>} />
