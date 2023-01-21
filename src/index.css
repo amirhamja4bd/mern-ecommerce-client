@@ -11,6 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
 body{
   /* background: #1A202C; */
   /* background: var(--bg-primary); */
@@ -20,6 +24,15 @@ body{
   outline: -webkit-focus-ring-color auto 0px !important;
 }
 
+.active {
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-underline-offset: 11px;
+}
+
+.pointer {
+  cursor: pointer;
+}
 
 
 /* jumbotron animation color css */

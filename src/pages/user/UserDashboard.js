@@ -2,10 +2,10 @@ import React from 'react';
 import UserMenu from '../../components/nav/UserMenu';
 import { useAuth } from '../../context/Auth';
 
-const Dashboard = () => {
+const UserDashboard = () => {
 
     const [auth, setAuth] = useAuth();
-    
+
     return (
         <div>
             <div className="container-fluid">
@@ -27,4 +27,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default UserDashboard;
