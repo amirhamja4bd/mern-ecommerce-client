@@ -27,7 +27,7 @@ body{
 .active {
   text-decoration: underline !important;
   text-decoration-thickness: 3px !important;
-  text-underline-offset: 11px;
+  text-underline-offset: 12px;
 }
 
 .pointer {

@@ -173,8 +173,12 @@ const Menu = () => {
                             Dashboard
                         </NavLink>
                         </li>
-
-                        <li className="nav-item pointer">
+                        <li>
+                        <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role === 1 ? "admin-profile" : "user-profile"
+                            }`}> Profile </NavLink>
+                        </li>
+                            
+                        <li className="nav-item pointer ">
                         <a onClick={logout} className="nav-link">
                             Logout
                         </a>

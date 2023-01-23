@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'react-tooltip/dist/react-tooltip.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/reset.css';
 import './index.css';

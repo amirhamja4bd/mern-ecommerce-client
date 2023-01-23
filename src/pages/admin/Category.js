@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import CategoryForm from '../../components/forms/CategoryForm';
 import AdminMenu from '../../components/nav/AdminMenu';
-
+import { Tooltip } from 'antd';
 
 const Category = () => {
 
@@ -25,7 +25,7 @@ const Category = () => {
         try{
             const { data } = await axios.get('/categories');
             setCategories(data);
-            console.log("data============>",data)
+            // console.log(data)
         }
         catch(error){
             console.log( error);
@@ -115,9 +115,11 @@ const Category = () => {
                                 <div class="card-body">
 
                                     {categories?.map((c)=> (
-                                        <button 
+                                        <Tooltip title="Update & Delete" color="purple">
+                                        <button
+                                            
                                             key={c._id}
-                                            className="btn btn-primary btn-sm my-3 me-4 "
+                                            className="btn btn-outline-primary btn-sm my-3 me-4 "
                                             onClick={()=>{
                                                 setVisible(true)
                                                 setSelected(c)
@@ -127,6 +129,8 @@ const Category = () => {
                                             {c.name} 
                                             
                                         </button>
+                                        </Tooltip>
+                                        
                                     ))}
                                 </div>
 
@@ -163,6 +167,7 @@ const Category = () => {
                         </div>
                         
                     </div>
+                    
                     
 
                 </div>

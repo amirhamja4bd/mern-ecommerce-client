@@ -15,6 +15,7 @@ import Category from './pages/admin/Category';
 import Product from './pages/admin/Product';
 import Profile from './pages/user/Profile';
 import Orders from './pages/user/Orders';
+import AdminProducts from './pages/admin/Products';
 
 function App() {
   return (
@@ -35,9 +36,10 @@ function App() {
           </Route>
 
           <Route path='/dashboard' element={<AdminRoute/>}>
-          <Route path='admin' element={<AdminDashboard/>} />
-          <Route path='admin/category' element={<Category/>} />
-          <Route path='admin/product' element={<Product/>} />
+            <Route path='admin' element={<AdminDashboard/>} />
+            <Route path='admin/category' element={<Category/>} />
+            <Route path='admin/product' element={<Product/>} />
+            <Route path='admin/products' element={<AdminProducts/>} />
           </Route>
 
           <Route path='*' element={<PageNotFound/>} />

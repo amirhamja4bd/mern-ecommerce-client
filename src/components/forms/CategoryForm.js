@@ -6,8 +6,8 @@ const CategoryForm = ({value, setValue, handleSubmit, buttonText = "Submit", han
         <div className='py-3'>
             <form onSubmit={ handleSubmit }>
                 <input
-                    type="text"
-                    className='form-control p-1'
+                    type="text" 
+                    className='form-control p-1 mt-2'
                     placeholder='Write Your Category Name'
                     value={value}
                     onChange={(e)=> setValue(e.target.value)}

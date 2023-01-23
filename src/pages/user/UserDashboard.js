@@ -1,6 +1,7 @@
 import React from 'react';
 import UserMenu from '../../components/nav/UserMenu';
 import { useAuth } from '../../context/Auth';
+import image from "../../assets/image/dashboard.svg"
 
 const UserDashboard = () => {
 
@@ -16,10 +17,12 @@ const UserDashboard = () => {
                 <div className="col-md-9">
                     <div className="p-3 mt-2 mb-2 h4 bg-light">User Information</div>
 
-                    <ul className="list-group">
+                    <img className='w-50 mx-auto d-block mt-5' src={image} alt=""/>
+                    
+                    {/* <ul className="list-group">
                     <li className="list-group-item">{auth?.user?.name}</li>
                     <li className="list-group-item">{auth?.user?.email}</li>
-                    </ul>
+                    </ul> */}
                 </div>
                 </div>        
             </div>

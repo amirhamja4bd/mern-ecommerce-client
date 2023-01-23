@@ -7,7 +7,7 @@ import { useAuth } from '../../context/Auth';
 
 const Login = () => {
 
-    const [email, setEmail] = useState("amir0@gmail.com");
+    const [email, setEmail] = useState("amir1@gmail.com");
     const [password, setPassword] = useState("12345678");
 
     // my hook
