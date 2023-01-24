@@ -16,6 +16,7 @@ import Product from './pages/admin/Product';
 import Profile from './pages/user/Profile';
 import Orders from './pages/user/Orders';
 import AdminProducts from './pages/admin/Products';
+import AdminProductUpdateDelete from './pages/admin/ProductUpdateDelete';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
-
+          
+          {/* Privet Route */}
           <Route path='/dashboard' element={<PrivetRoute/>}>
             <Route path='user' element={<UserDashboard/>} />
             <Route path='user/profile' element={<Profile/>} />
@@ -35,11 +37,13 @@ function App() {
             
           </Route>
 
+           {/* Admin Route */}
           <Route path='/dashboard' element={<AdminRoute/>}>
             <Route path='admin' element={<AdminDashboard/>} />
             <Route path='admin/category' element={<Category/>} />
             <Route path='admin/product' element={<Product/>} />
             <Route path='admin/products' element={<AdminProducts/>} />
+            <Route path='admin/product/update/:slug' element={<AdminProductUpdateDelete/>} />
           </Route>
 
           <Route path='*' element={<PageNotFound/>} />

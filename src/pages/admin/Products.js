@@ -38,19 +38,25 @@ const AdminProducts = () => {
                             {products.map((p)=>(
                                 
                                 <div className="col-sm-4 col-md-3 my-2 ">
-                                    <Link className='nav-link' key={p._id} to={`/dashboard/admin/product/update`}>
+                                    
                                         <div class="card shadow ">
-                                            <img
+                                            
+                                                <img
 
-                                                src={`${process.env.REACT_APP_API}/product/photo/${p._id}`}
+                                                    src={`${process.env.REACT_APP_API}/product/photo/${p._id}`}
 
-                                                alt={p.name}
-                                                className="img img-fluid rounded-top"
-                                            />
+                                                    alt={p.name}
+                                                    className="img img-fluid rounded-top"
+                                                />
                                             <div class="card-body">
                                             <h5 class="card-title">{p.name}</h5>
                                             <p class="card-text">{p.description}</p>
+
+                                            <Link className='nav-link' key={p._id} to={`/dashboard/admin/product/update/${p.slug}`}>
+                                                <button className='btn btn-primary btn-sm'>Update & Delete</button>
+                                            </Link>
                                             </div>
+
                                             <div class="card-footer">
                                                 <div className='d-flex justify-content-between'>
                                                     <small class="text-muted">{moment(p.createdAt).format( "Do MMMM YYYY")}</small>
@@ -59,7 +65,7 @@ const AdminProducts = () => {
 
                                             </div>
                                         </div>
-                                    </Link>
+                                    
                                 </div>
                                 
                             ))}

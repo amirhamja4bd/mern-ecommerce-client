@@ -3,10 +3,12 @@ import { Option } from 'antd/es/mentions';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AdminMenu from '../../components/nav/AdminMenu';
+import Swal from 'sweetalert2'
 
-const Product = () => {
+
+const AdminProductUpdateDelete = () => {
 
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState("");
@@ -16,12 +18,14 @@ const Product = () => {
     const [price, setPrice] = useState("");
     const [shipping, setShipping] = useState("");
     const [quantity, setQuantity] = useState("");
+    const [id, setId] = useState("");
 
     const navigate = useNavigate();
-
+    const params = useParams();
 
     useEffect(()=>{
         loadCategories();
+        loadProducts();
     },[]);
 
     // Category Load
@@ -35,12 +39,29 @@ const Product = () => {
         }
     }
 
+    // Products Load
+    const loadProducts =async () =>{
+        try{
+            const { data } = await axios.get(`/product/${params.slug}`);
+            setName(data.name);
+            setDescription(data.description);
+            setPrice(data.price);
+            setCategory(data.category._id);
+            setShipping(data.shipping);
+            setQuantity(data.quantity);
+            setId(data._id);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     // Product Submit
-    const handleSubmit = async (e) =>{
+    const handleUpdate = async (e) =>{
         e.preventDefault();
         try{
             const productData = new FormData();
-            productData.append("photo", photo);
+            photo && productData.append("photo", photo);
             productData.append("name", name);
             productData.append("description", description);
             productData.append("price", price);
@@ -48,9 +69,9 @@ const Product = () => {
             productData.append("shipping", shipping);
             productData.append("quantity", quantity);
 
-            const { data } = await axios.post('/product', productData);
+            const { data } = await axios.put(`/product/${id}`, productData);
             if(data?.error){
-                console.log('product--->',data)
+                console.log('productUp--->',data)
                 toast.error(data.error);
             }
             else{
@@ -64,6 +85,41 @@ const Product = () => {
         }
     };
 
+    // Handle Delete
+    // const handleDelete = async (req, res) =>{
+    //     try{
+    //         let answer = window.confirm("Are you Sure you want to Delete this Product?");
+    //         if (!answer) {
+    //             return;
+    //         }
+    //         const { data } = await axios.delete(`/product/${id}`);
+    //         toast.success(`"${data.name}" is deleted`);
+    //         navigate("/dashboard/admin/products");
+    //     }
+    //     catch(error){
+    //         console.log(error);
+    //         toast("Delete failed. try again later");
+    //     }
+    // }
+
+    // Delete 
+    const handleDelete = async (req, res) =>{
+        Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/product/${id}`);
+                    navigate("/dashboard/admin/products");
+                }
+            })
+    }
+    
 
     return (
         <div>
@@ -76,9 +132,10 @@ const Product = () => {
                     <div className="p-3 mt-2 mb-2 h4 bg-light">Create Products</div>
                     
                     <div className='w-50 mx-auto'>
-                        {/*  Photo Show */}
-                        {photo && (
-                            <div className=''>
+
+                        {/*  is photo Available or Not*/}
+                        {photo ? (
+                            <div className='text-center'>
                                 <img 
                                     src={URL.createObjectURL(photo)} 
                                     alt="Product Photo"
@@ -86,6 +143,15 @@ const Product = () => {
                                     height="150px"
                                 />
                                     
+                            </div>
+                        ) : (
+                            
+                            <div className='text-center'>
+                                <img 
+                                src={`${process.env.REACT_APP_API}/product/photo/${id}`} 
+                                alt=""
+                                height="150px"
+                                />
                             </div>
                         )}
                         
@@ -141,6 +207,7 @@ const Product = () => {
                             className='form-select mb-3'
                             placeholder='Choose Category'
                             onChange={(value) => setCategory(value)}
+                            value={category}
                         >
 
                             {categories?.map((c) => (
@@ -157,6 +224,7 @@ const Product = () => {
                             className="form-select mb-3"
                             placeholder="Choose shipping"
                             onChange={(value) => setShipping(value)}
+                            value={shipping ? "Yes" : "No"}
                         >
                             <Option value="0">No</Option>
                             <Option value="1">Yes</Option>
@@ -172,9 +240,14 @@ const Product = () => {
                             onChange={(e) => setQuantity(e.target.value)}
                         />
                         {/* Submit */}
-                        <button onClick={handleSubmit} className="btn btn-primary mb-5 w-100">
-                            Submit
-                        </button>
+                        <div className=' d-flex justify-content-between'>
+                            <button onClick={handleUpdate} className="btn btn-primary mb-5 ">
+                                Update
+                            </button>
+                            <button onClick={handleDelete} className="btn btn-danger mb-5 ">
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -183,4 +256,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default AdminProductUpdateDelete;
