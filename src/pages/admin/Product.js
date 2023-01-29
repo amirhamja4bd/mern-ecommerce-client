@@ -5,6 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AdminMenu from '../../components/nav/AdminMenu';
+// import { Button, Result } from 'antd';
+
+
 
 const Product = () => {
 
@@ -15,10 +18,10 @@ const Product = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [shipping, setShipping] = useState("");
-    const [quantity, setQuantity] = useState("");
+    const [stock, setStock] = useState("");
 
     const navigate = useNavigate();
-
+    
 
     useEffect(()=>{
         loadCategories();
@@ -34,6 +37,7 @@ const Product = () => {
             console.log(error);
         }
     }
+    
 
     // Product Submit
     const handleSubmit = async (e) =>{
@@ -46,7 +50,7 @@ const Product = () => {
             productData.append("price", price);
             productData.append("category", category);
             productData.append("shipping", shipping);
-            productData.append("quantity", quantity);
+            productData.append("stock", stock);
 
             const { data } = await axios.post('/product', productData);
             if(data?.error){
@@ -56,6 +60,7 @@ const Product = () => {
             else{
                 toast.success(`'${data.name}' is created successfully`);
                 navigate('/dashboard/admin/products');
+                
             }
         }
         catch(error){
@@ -63,6 +68,9 @@ const Product = () => {
             toast.error('Product create failed. try again later');
         }
     };
+
+
+    
 
 
     return (
@@ -78,7 +86,7 @@ const Product = () => {
                     <div className='w-50 mx-auto'>
                         {/*  Photo Show */}
                         {photo && (
-                            <div className=''>
+                            <div className='text-center'>
                                 <img 
                                     src={URL.createObjectURL(photo)} 
                                     alt="Product Photo"
@@ -134,6 +142,22 @@ const Product = () => {
                         />
                         
                         {/* Product Category */}
+                        {/* <Select
+                            showSearch
+                            bordered={false}
+                            size="small"
+                            className='form-select mb-3'
+                            placeholder='Choose Category'
+                            onChange={(value) => setCategory(value)}
+                            filterOption={true}
+                        >
+
+                            {categories?.map((c) => (
+                                <Option key={c._id} value={c._id}>
+                                    {c.name}
+                                </Option>
+                            ))}
+                        </Select> */}
                         <Select
                             showSearch
                             bordered={false}
@@ -141,6 +165,8 @@ const Product = () => {
                             className='form-select mb-3'
                             placeholder='Choose Category'
                             onChange={(value) => setCategory(value)}
+                            dataSource={Option}
+                            filterOption={(inputValue, Option) => Option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                         >
 
                             {categories?.map((c) => (
@@ -157,6 +183,7 @@ const Product = () => {
                             className="form-select mb-3"
                             placeholder="Choose shipping"
                             onChange={(value) => setShipping(value)}
+                            
                         >
                             <Option value="0">No</Option>
                             <Option value="1">Yes</Option>
@@ -167,9 +194,9 @@ const Product = () => {
                             type="number"
                             min="1"
                             className="form-control p-2 mb-3"
-                            placeholder="Enter quantity"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
+                            placeholder="Enter Stock"
+                            value={stock}
+                            onChange={(e) => setStock(e.target.value)}
                         />
                         {/* Submit */}
                         <button onClick={handleSubmit} className="btn btn-primary mb-5 w-100">

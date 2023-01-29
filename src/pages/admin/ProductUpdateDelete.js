@@ -5,10 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminMenu from '../../components/nav/AdminMenu';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
+import { message, Popconfirm } from 'antd';
 
 
 const AdminProductUpdateDelete = () => {
+
 
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState("");
@@ -17,7 +19,7 @@ const AdminProductUpdateDelete = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [shipping, setShipping] = useState("");
-    const [quantity, setQuantity] = useState("");
+    const [stock, setStock] = useState("");
     const [id, setId] = useState("");
 
     const navigate = useNavigate();
@@ -48,7 +50,7 @@ const AdminProductUpdateDelete = () => {
             setPrice(data.price);
             setCategory(data.category._id);
             setShipping(data.shipping);
-            setQuantity(data.quantity);
+            setStock(data.stock);
             setId(data._id);
         }
         catch(error){
@@ -67,7 +69,7 @@ const AdminProductUpdateDelete = () => {
             productData.append("price", price);
             productData.append("category", category);
             productData.append("shipping", shipping);
-            productData.append("quantity", quantity);
+            productData.append("stock", stock);
 
             const { data } = await axios.put(`/product/${id}`, productData);
             if(data?.error){
@@ -102,23 +104,48 @@ const AdminProductUpdateDelete = () => {
     //     }
     // }
 
-    // Delete 
-    const handleDelete = async (req, res) =>{
-        Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.delete(`/product/${id}`);
-                    navigate("/dashboard/admin/products");
-                }
-            })
+    //Handle Delete
+
+    // Delete sweetalert2
+
+    // const handleDelete = async (req, res) =>{
+    //     Swal.fire({
+    //             title: 'Are you sure?',
+    //             text: "You won't be able to revert this!",
+    //             icon: 'warning',
+    //             showCancelButton: true,
+    //             confirmButtonColor: '#3085d6',
+    //             cancelButtonColor: '#d33',
+    //             confirmButtonText: 'Yes, delete it!'
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 axios.delete(`/product/${id}`);
+    //                 navigate("/dashboard/admin/products");
+    //             }
+    //         })
+    // }
+
+    //delete  ant design
+    const confirm = async (req, res) =>{
+        try{
+            const { data } = await axios.delete(`/product/${id}`);
+            toast.success(`"${data.name}" is deleted`);
+            navigate("/dashboard/admin/products");
+        }
+        catch(error){
+            console.log(error);
+            toast("Delete failed. try again later");
+        }
     }
+    const cancel = (e) => {
+        console.log(e);
+        message.error('Click on No');
+    };
+
+
+    
+
+    
     
 
     return (
@@ -150,6 +177,7 @@ const AdminProductUpdateDelete = () => {
                                 <img 
                                 src={`${process.env.REACT_APP_API}/product/photo/${id}`} 
                                 alt=""
+                                className='img img-responsive rounded '
                                 height="150px"
                                 />
                             </div>
@@ -208,6 +236,8 @@ const AdminProductUpdateDelete = () => {
                             placeholder='Choose Category'
                             onChange={(value) => setCategory(value)}
                             value={category}
+                            dataSource={Option}
+                            filterOption={(inputValue, Option) => Option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                         >
 
                             {categories?.map((c) => (
@@ -216,6 +246,7 @@ const AdminProductUpdateDelete = () => {
                                 </Option>
                             ))}
                         </Select>
+                        
 
                         {/* Product Shipping? */}
                         <Select
@@ -235,18 +266,29 @@ const AdminProductUpdateDelete = () => {
                             type="number"
                             min="1"
                             className="form-control p-2 mb-3"
-                            placeholder="Enter quantity"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
+                            placeholder="Enter Stock"
+                            value={stock}
+                            onChange={(e) => setStock(e.target.value)}
                         />
                         {/* Submit */}
                         <div className=' d-flex justify-content-between'>
-                            <button onClick={handleUpdate} className="btn btn-primary mb-5 ">
+                            <button onClick={handleUpdate} className="btn btn-primary">
                                 Update
                             </button>
-                            <button onClick={handleDelete} className="btn btn-danger mb-5 ">
+                            {/* <button onClick={handleDelete} className="btn btn-danger mb-5 ">
                                 Delete
-                            </button>
+                            </button> */}
+                            <Popconfirm
+                                title="Delete the task"
+                                className='btn btn-danger'
+                                description="Are you sure to delete this task?"
+                                onConfirm={confirm}
+                                onCancel={cancel}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <button className=''>Delete</button>
+                            </Popconfirm>
                         </div>
                     </div>
                 </div>

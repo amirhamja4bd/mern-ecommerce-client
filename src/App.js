@@ -17,6 +17,8 @@ import Profile from './pages/user/Profile';
 import Orders from './pages/user/Orders';
 import AdminProducts from './pages/admin/Products';
 import AdminProductUpdateDelete from './pages/admin/ProductUpdateDelete';
+import { FloatButton } from 'antd';
+import Shop from './pages/Shop';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
       <Toaster/>
         <Routes>
           <Route path='/' element={<HomePage></HomePage>} />
+          <Route path='/shop' element={<Shop/>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
           
@@ -49,6 +52,7 @@ function App() {
           <Route path='*' element={<PageNotFound/>} />
         </Routes>
         <Footer/>
+        <FloatButton.BackTop />
       </BrowserRouter>
     </div>
   );
