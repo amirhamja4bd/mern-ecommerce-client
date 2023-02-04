@@ -5,7 +5,7 @@ import { Badge } from "antd";
 const ProductCard = ({p}) => {
     return (
         <div>
-            <div className="card shadow mx-2">
+            <div className="card shadow mx-2 mb-5">
             <Badge.Ribbon text={`${p?.sold} sold`} color="red">
                 <Badge.Ribbon
                 text={`${p?.stock >= 1
@@ -31,7 +31,7 @@ const ProductCard = ({p}) => {
                             style: "currency",
                             currency: "USD",
                         })}
-                        {/* {p?.price?.toLocaleString("bn-BD", {
+                        {/* {p?.price?.toLocaleString("en-BD", {
                             style: "currency",
                             currency: "BDT",
                         })} */}
