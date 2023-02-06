@@ -25,7 +25,7 @@ const ProductCard = ({p}) => {
             </Badge.Ribbon>
                 <div className=' card-body px-3 pb-0'>
                     <h5>{p?.name}</h5>
-                    <p className="card-text">{p?.description?.substring(0, 60)}...</p>
+                    <p className="card-text">{p?.description?.substring(0, 60)} {p?.description?.length>60 ? ('...'): ('')} </p>
                     <h4 className="">
                         {p?.price?.toLocaleString("en-US", {
                             style: "currency",

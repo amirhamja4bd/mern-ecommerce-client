@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from '../components/cards/ProductCard';
 import { Checkbox, Radio } from 'antd';
-// import { prices } from "../prices";
 import { prices } from './Prices'
 
 const Shop = () => {
@@ -13,9 +12,14 @@ const Shop = () => {
     const [checked, setChecked] = useState([]);
     const [radio, setRadio] = useState([]);
 
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         loadCategories();
         if (!checked.length || !radio.length) loadProducts();
+        getTotal();
     }, []);
 
     useEffect(() => {
@@ -23,16 +27,43 @@ const Shop = () => {
 
     }, [checked, radio]);
 
+    useEffect(() => {
+        if (page === 1) return;
+        loadMore();
+      }, [page]);
+    
+      const getTotal = async () => {
+        try {
+          const { data } = await axios.get("/products-count");
+          setTotal(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+    // Load More
+    const loadMore = async () => {
+        try {
+          setLoading(true);
+          const { data } = await axios.get(`/list-products/${page}`);
+          setProducts([...products, ...data]);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
+      };
+
     // Load Products
     const loadProducts = async () => {
         try {
-            const { data } = await axios.get("/products");
+            const { data } = await axios.get(`/list-products/${page}`);
             setProducts(data);
         } catch (err) {
             console.log(err);
         }
     };
-
+    
     //Load Categories
     const loadCategories = async () => {
         try {
@@ -43,6 +74,7 @@ const Shop = () => {
         }
     };
 
+    //Checked handle
     const handleCheck = (value, id) => {
         console.log(value, id);
         let all = [...checked];
@@ -54,6 +86,7 @@ const Shop = () => {
         }
         setChecked(all);
     }
+
 
     // Filter
     const loadFilteredProducts = async () => {
@@ -87,6 +120,7 @@ const Shop = () => {
                                 </Checkbox>
                             ))}
                         </div>
+                        
                         <h4 className='p-3 mt-2 bg-light text-center'>Filter By Price</h4>
                         <div className="row">
                             <Radio.Group onChange={(e) => setRadio(e.target.value)} >
@@ -120,6 +154,21 @@ const Shop = () => {
                                     <ProductCard p={p}/>
                                 </div>
                             ))}
+
+                            <div className="container text-center p-5">
+                                {products && products.length < total && (
+                                <button
+                                    className="btn btn-warning btn-lg col-md-6"
+                                    disabled={loading}
+                                    onClick={(e) => {
+                                    e.preventDefault();
+                                    setPage(page + 1);
+                                    }}
+                                >
+                                    {loading ? "Loading..." : "Load more"}
+                                </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -11,10 +11,34 @@ const HomePage = () => {
     const [auth, setAuth ] = useAuth()
     const [products, setProducts] = useState([]);
 
+    const [listProducts, setListProducts] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+
     useEffect(()=>{
         loadProducts();
+        loadListProducts();
+        getTotal();
     },[])
 
+    //Load more
+    useEffect(() => {
+        if (page === 1) return;
+        loadMore();
+      }, [page]);
+
+      // Get Total
+      const getTotal = async () => {
+        try {
+          const { data } = await axios.get("/products-count");
+          setTotal(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+    //All Products
     const loadProducts = async () => {
         try{
             const { data } = await axios.get('/products');
@@ -24,6 +48,30 @@ const HomePage = () => {
             console.log(error);
         }
     }
+
+    // List Products per page
+    const loadListProducts = async () => {
+        try{
+            const { data } = await axios.get(`/list-products/${page}`);
+            setListProducts(data);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    // Load more
+    const loadMore = async () => {
+        try {
+          setLoading(true);
+          const { data } = await axios.get(`/list-products/${page}`);
+          setListProducts([...listProducts, ...data]);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
+      };
 
 // Carousel
     let newP = document.querySelector('.new-product');
@@ -53,6 +101,7 @@ const HomePage = () => {
         console.log(width)
     }
 
+    //Best selling products
     const arr = [...products];
     const sortedBySold = arr?.sort((a, b) => (a.sold < b.sold ? 1 : -1));
 
@@ -95,6 +144,31 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
+            <section>
+                <h2 className="mt-2 display-6 mx-5 px-2 bg-light"> All Products </h2>
+                <div className="row pb-5  mx-5">
+                        {listProducts?.map((p)=>(
+                            <div key={p._id} className="col-md-3">
+                                <ProductCard p={p} />
+                            </div>
+                        ))}
+                    </div>
+            </section>
+
+            <div className="container text-center p-5">
+                {listProducts && listProducts.length < total && (
+                <button
+                    className="btn btn-warning btn-lg col-md-6"
+                    disabled={loading}
+                    onClick={(e) => {
+                    e.preventDefault();
+                    setPage(page + 1);
+                    }}
+                >
+                    {loading ? "Loading..." : "Load more"}
+                </button>
+                )}
+            </div>
 
         </div>
     );
