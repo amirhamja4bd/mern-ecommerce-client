@@ -19,6 +19,7 @@ import AdminProducts from './pages/admin/Products';
 import AdminProductUpdateDelete from './pages/admin/ProductUpdateDelete';
 import { FloatButton } from 'antd';
 import Shop from './pages/Shop';
+import SearchPage from './pages/SearchPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/shop' element={<Shop/>} />
+          <Route path='/search' element={<SearchPage/>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
           

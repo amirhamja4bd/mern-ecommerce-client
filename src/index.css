@@ -26,11 +26,17 @@ body{
   -webkit-box-shadow: none !important;
   outline: -webkit-focus-ring-color auto 0px !important;
 }
-
+li{
+  font-weight: 500;
+}
 .active {
-  text-decoration: underline !important;
   text-decoration-thickness: 3px !important;
-  text-underline-offset: 12px;
+  color: #000e2c;
+  /* text-decoration: underline !important;
+  text-underline-offset: 12px; */
+}
+NavLink{
+  color: #000!important;
 }
 
 .pointer {
