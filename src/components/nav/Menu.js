@@ -2,11 +2,15 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
 import MegaCategories from '../forms/MegaCategories';
+import useCategory from '../hooks/useCategory';
 import SearchForm from '../forms/SearchForm';
 import "./menu.css";
 
 const Menu = () => {
+    // context
     const [auth, setAuth] = useAuth();
+    //hook
+    const categories = useCategory();
     const navigate = useNavigate();
 
     const logout = ()=> {
@@ -35,13 +39,38 @@ const Menu = () => {
                 </NavLink>
                 </li>
 
-                <MegaCategories/>
+                <div className="dropdown">
+                    <li>
+                        <a
+                        className="nav-link pointer dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        >
+                        Categories
+                        </a>
 
-                {/* <li className="nav-item">
-                <NavLink className="nav-link" aria-current="page" to="/shop">
-                    <MegaCategories/>
-                </NavLink>
-                </li> */}
+                        <ul
+                        className="dropdown-menu"
+                        style={{ height: "300px", width: "200px", overflow: "scroll" }}
+                        >
+                        <li>
+                            <NavLink className="nav-link" to="/categories">
+                            <p className='text-dark fs-5 fw-bold'>All Categories</p>
+                            </NavLink>
+                        </li>
+
+                        {categories?.map((c) => (
+                            <li>
+                            <NavLink className="nav-link" to={`/category/${c.slug}`}>
+                                <p className='text-dark'>{c.name}</p>
+                            </NavLink>
+                            </li>
+                        ))}
+                        </ul>
+                    </li>
+                </div>
+
+                {/* <MegaCategories/> */}
+                
                 <div className=' d-flex ms-auto'>
                 <SearchForm/>
             

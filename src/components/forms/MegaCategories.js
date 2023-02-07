@@ -1,39 +1,36 @@
 import React, { Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
+import useCategory from '../hooks/useCategory';
 import './MegaCategories.css'
 
 const MegaCategories = () => {
+    const categories = useCategory();
+
     return (
         <Fragment>
             <li className="nav-item mega-dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <NavLink className="nav-link dropdown-toggle"  to="/categories" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Categories
-                </a>
+                </NavLink>
                 <div className="dropdown-menu ">
+                <li className=''>
+                    <NavLink className="nav-link" to="/categories">
+                    All Categories
+                    </NavLink>
+                </li>
+                    {categories?.map((c) => (
+                        <li className='w-50'>
+                        <NavLink className="nav-link " to={`/category/${c.slug}`}>
+                            {c.name}
+                        </NavLink>
+                        </li>
+                    ))}
+                </div>
+                {/* <div className="dropdown-menu ">
                     <ul>
                         <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-
-                        </ul>
-                        <ul>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-
-                        </ul>
-                        <ul>
-                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-                        <li><a className="dropdown-item" href="#">Mega Menu Link</a></li>
-
                     </ul>
-                </div>
+                </div> */}
             </li>
         </Fragment>
     );

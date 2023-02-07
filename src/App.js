@@ -20,6 +20,9 @@ import AdminProductUpdateDelete from './pages/admin/ProductUpdateDelete';
 import { FloatButton } from 'antd';
 import Shop from './pages/Shop';
 import SearchPage from './pages/SearchPage';
+import ProductView from './pages/ProductView';
+import CategoriesList from './pages/CategoriesList';
+import CategoryView from './pages/CategoryView';
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/shop' element={<Shop/>} />
           <Route path='/search' element={<SearchPage/>} />
+          <Route path='/categories' element={<CategoriesList/>} />
+          <Route path='/category/:slug' element={<CategoryView/>} />
+          <Route path='/product/:slug' element={<ProductView/>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/login' element={<Login/>} />
           

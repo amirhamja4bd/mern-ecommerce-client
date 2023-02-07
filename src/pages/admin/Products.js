@@ -50,7 +50,7 @@ const AdminProducts = () => {
                                                 />
                                             <div class="card-body">
                                             <h5 class="card-title">{p.name}</h5>
-                                            <p class="card-text">{p.description}</p>
+                                            <p className="card-text">{p?.description?.substring(0, 60)}{p?.description?.length>60 ? ('...'): ('')}</p>
 
                                             <Link className='nav-link' key={p._id} to={`/dashboard/admin/product/update/${p.slug}`}>
                                                 <button className='btn btn-primary btn-sm'>Update & Delete</button>
