@@ -23,17 +23,20 @@ import SearchPage from './pages/SearchPage';
 import ProductView from './pages/ProductView';
 import CategoriesList from './pages/CategoriesList';
 import CategoryView from './pages/CategoryView';
+import Cart from './pages/Cart';
+
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
       <Menu></Menu>
-      <Toaster/>
+      <Toaster position='top-right mt-5 zindex-popover'/>
         <Routes>
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/shop' element={<Shop/>} />
           <Route path='/search' element={<SearchPage/>} />
+          <Route path='/cart' element={<Cart/>} />
           <Route path='/categories' element={<CategoriesList/>} />
           <Route path='/category/:slug' element={<CategoryView/>} />
           <Route path='/product/:slug' element={<ProductView/>} />

@@ -108,7 +108,7 @@ const Shop = () => {
 
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-3 sticky-top" >
+                    <div className="col-md-3 " >
                         <h4 className="p-3 mt-2 bg-light text-center">Filter By Categories</h4>
                         <div className="row px-5">
                             {categories?.map((c)=>(

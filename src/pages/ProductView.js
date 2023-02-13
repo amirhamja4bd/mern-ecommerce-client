@@ -13,11 +13,14 @@ import {
 } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import ProductCard from "../components/cards/ProductCard";
+import { useCart } from "../context/Cart";
+import { toast } from "react-hot-toast";
 
 const ProductView = () => {
 
     const [product, setProduct] = useState({});
     const [related, setRelated] = useState([]);
+    const [cart, setCart] = useCart();
 
     const params = useParams();
 
@@ -46,6 +49,27 @@ const ProductView = () => {
         }
       };
 
+
+      function addToCart (product){
+        if(cart?.length >= 1){
+            let checkExit = cart.some((item)=> item?._id === product);
+            if(!checkExit){
+                setCart([ ...cart, product]);
+                localStorage.setItem("cart", JSON.stringify([ ...cart, product]));
+                toast.success("product Added to Cart");
+            }
+            else{
+                toast.error("Product Already added");
+            }
+        }
+        else{
+            setCart([...cart, product]);
+            localStorage.setItem("cart", JSON.stringify([ ...cart, product]));
+            toast.success("product Added to Cart");
+        }
+    }
+
+
     return (
         <div>
             <div className="container">
@@ -71,7 +95,15 @@ const ProductView = () => {
                             })}
                             </p>
                             <button className="btn btn-primary me-2">Buy Now</button>
-                            <button className="btn btn-outline-primary">Add to Cart</button>
+                            <button 
+                                // onClick={()=>{
+                                //     setCart([ ...cart, product]);
+                                //     localStorage.setItem("cart", JSON.stringify([...cart, product]));
+                                //     toast.success("Added to cart");
+                                // }} 
+                                // onClick={addToCart.bind(this, p)}
+                                onClick={addToCart.bind(this, product?._id)}
+                                className="btn btn-outline-primary">Add to Cart</button>
                         </div>
                     </div>
                 </div>

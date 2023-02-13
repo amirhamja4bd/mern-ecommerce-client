@@ -10,7 +10,7 @@ const Register = () => {
     const [name, setName] = useState("Amir Hamza");
     const [email, setEmail] = useState("amir0@gmail.com");
     const [password, setPassword] = useState("12345678");
-
+    // let photo = 'https://i.ibb.co/4pDNDk1/avatar.png'
     // my hook
     const [auth, setAuth ] = useAuth()
     //hook
@@ -28,7 +28,7 @@ const Register = () => {
             // }
 
             const { data } = await axios.post(
-                `/register`, {name, email, password,});
+                `/register`, {name, email, password});
             console.log( data);
             if(data?.error){
                 toast.error(data.error)

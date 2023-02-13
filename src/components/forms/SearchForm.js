@@ -30,7 +30,7 @@ const SearchForm = () => {
                 <input
                     type="search"
                     style={{ borderRadius: "8px 0 0 8px" }}
-                    className="form-control"
+                    className="form-control bg-light"
                     placeholder="Search"
                     onChange={(e) => setValues({ ...values, keyword: e.target.value })}
                     value={values.keyword}

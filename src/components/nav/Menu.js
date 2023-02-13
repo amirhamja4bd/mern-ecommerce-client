@@ -1,14 +1,16 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth';
-import MegaCategories from '../forms/MegaCategories';
 import useCategory from '../hooks/useCategory';
 import SearchForm from '../forms/SearchForm';
+import { Badge } from 'antd';
 import "./menu.css";
+import { useCart } from '../../context/Cart';
 
 const Menu = () => {
     // context
     const [auth, setAuth] = useAuth();
+    const [cart, setCart] = useCart();
     //hook
     const categories = useCategory();
     const navigate = useNavigate();
@@ -20,8 +22,8 @@ const Menu = () => {
     }
 
     return (
-        <div>
-            <ul className="nav d-flex px-5 shadow-sm mb-2 ">
+        <div className='sticky-top'>
+            <ul className="nav d-flex px-5 shadow-sm mb-2 bg-light zindex-sticky">
                 <li className="nav-item d-flex align-items-center me-5">
                 <a className="navbar-brand text-primary" aria-current="page" href="/">
                     <i class="fa-brands fa-shopify"></i>
@@ -45,7 +47,7 @@ const Menu = () => {
                         className="nav-link pointer dropdown-toggle"
                         data-bs-toggle="dropdown"
                         >
-                        Categories
+                        CATEGORIES
                         </a>
 
                         <ul
@@ -59,7 +61,7 @@ const Menu = () => {
                         </li>
 
                         {categories?.map((c) => (
-                            <li>
+                            <li key={c._id} >
                             <NavLink className="nav-link" to={`/category/${c.slug}`}>
                                 <p className='text-dark'>{c.name}</p>
                             </NavLink>
@@ -68,6 +70,20 @@ const Menu = () => {
                         </ul>
                     </li>
                 </div>
+
+                <li className="nav-item">
+                    <Badge 
+                        className='fs-6 pt-1'
+                        count={cart?.length >=1 ? cart.length : 0}
+                        offset={[-5, 11]}
+                        size="small"
+                        showZero={true}
+                    >
+                        <NavLink className="nav-link " aria-current="page" to="/cart">
+                            CART
+                        </NavLink>
+                    </Badge>
+                </li>
 
                 {/* <MegaCategories/> */}
                 
@@ -95,9 +111,9 @@ const Menu = () => {
                         data-bs-toggle="dropdown"
                         style={{ marginBottom:"10px"}}
                     >
-                        {/* <img className='me-2 pb-2' src="https://raw.githubusercontent.com/amirhamja4bd/imageemail/main/mee.png?token=GHSAT0AAAAAAB3LMGF3WM5AWAF3NCMZD6NGY7CDWCA" alt="" style={{height:"28px"}}/> */}
+                        {/* <img className='me-2 pb-2' src="https://media.licdn.com/dms/image/C5603AQFM-wV_95HBPA/profile-displayphoto-shrink_100_100/0/1642605717330?e=1681344000&v=beta&t=HeRlv0VkzlI5bAmiTrUKocGPAni57-fzgTl-DkofSeE" alt="" style={{height:"35px", borderRadius:"50%"}}/> */}
                         
-                        {auth?.user?.name}
+                        {auth?.user?.name?.toUpperCase()?.toUpperCase()}
                     </a>
 
                     <ul className="dropdown-menu">
