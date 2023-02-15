@@ -155,10 +155,13 @@ const HomePage = () => {
                     </div>
             </section>
 
-            <div className="container text-center p-5">
+            <div className="container text-center ">
+            
                 {listProducts && listProducts.length < total && (
+                <div className='divider'>
+                <div class="dividermask"></div> 
                 <button
-                    className="btn btn-warning btn-lg col-md-6"
+                    className="btn btn-warning btn-lg col-md-6 pt-1 text-center"
                     disabled={loading}
                     onClick={(e) => {
                     e.preventDefault();
@@ -167,6 +170,7 @@ const HomePage = () => {
                 >
                     {loading ? "Loading..." : "Load more"}
                 </button>
+                </div>
                 )}
             </div>
 

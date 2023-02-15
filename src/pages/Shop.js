@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductCard from '../components/cards/ProductCard';
 import { Checkbox, Radio } from 'antd';
 import { prices } from './Prices'
+import "./home.css";
 
 const Shop = () => {
 
@@ -157,8 +158,10 @@ const Shop = () => {
 
                             <div className="container text-center p-5">
                                 {products && products.length < total && (
+                                <div className='divider'>
+                                <div class="dividermask"></div> 
                                 <button
-                                    className="btn btn-warning btn-lg col-md-6"
+                                    className="btn btn-warning btn-lg col-md-6 pt-1 text-center"
                                     disabled={loading}
                                     onClick={(e) => {
                                     e.preventDefault();
@@ -167,6 +170,7 @@ const Shop = () => {
                                 >
                                     {loading ? "Loading..." : "Load more"}
                                 </button>
+                                </div> 
                                 )}
                             </div>
                         </div>

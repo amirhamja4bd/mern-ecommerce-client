@@ -116,7 +116,7 @@ const Cart = () => {
 
                                                  /></td>
                                             <td>{totalItemPrice(p)}</td>
-                                            <td className='text-danger'><RiDeleteBin6Line onClick={()=> removeFromCart(p._id)} className=' pointer'/></td>
+                                            <td className='text-danger text-center'><RiDeleteBin6Line onClick={()=> removeFromCart(p._id)} className=' pointer'/></td>
                                             </tr>
                                         </tbody>
                                     ))}

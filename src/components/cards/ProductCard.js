@@ -14,13 +14,16 @@ const ProductCard = ({p}) => {
     function addToCart (p){
         if(cart?.length >= 1){
             let checkExit = cart.some((item)=> item?._id === p?._id);
-            if(!checkExit){
+
+            if(checkExit){
+                
+                toast.error("Product Already added");
+                
+            }
+            else{
                 setCart([ ...cart, p]);
                 localStorage.setItem("cart", JSON.stringify([ ...cart, p]));
                 toast.success("product Added to Cart");
-            }
-            else{
-                toast.error("Product Already added");
             }
         }
         else{
