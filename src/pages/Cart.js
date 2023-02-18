@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/Auth';
 import { useCart } from '../context/Cart';
 import Jumbotron from "../components/cards/Jumbotron";
-import { RiDeleteBin6Line } from 'react-icons/ri';
+import ProductCartBody from '../components/cards/ProductCartBody';
+import UserCartSidebar from '../components/cards/UserCartSidebar';
+// import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const Cart = () => {
 
     const [auth, setAuth ] = useAuth();
-    const [cart, setCart]=useCart()
+    const [cart, setCart]=useCart();
     const navigate = useNavigate();
 
     const removeFromCart = (productId)=>{
@@ -26,8 +28,6 @@ const Cart = () => {
             let stock = item?.itemStock || 1;
             let price = stock * item?.price;
             total += price;
-            
-            // total += item?.price;
         });
         return total.toLocaleString("en-US",{style:"currency", currency:"USD"});
     }
@@ -64,7 +64,7 @@ const Cart = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-12">
-                        <h4 className="p-3 mt-2 mb-2 bg-light text-center">
+                        <div className="p-3 h4 mt-2 mb-2 bg-light text-center">
                             {cart?.length ? (" My Cart") : (
                                 <div className="text-center">
                                     <button 
@@ -72,7 +72,7 @@ const Cart = () => {
                                         className='btn btn-primary'>Continue Shopping</button>
                                 </div>
                             )}
-                        </h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,99 +80,21 @@ const Cart = () => {
             {cart?.length && (
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8">
-                            <div className="row">
-                                <div className="card">
-                                    <table class="table align-middle">
-                                        <thead>
-                                            <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col"></th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Total Price</th>
-                                            <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                    {cart?.map((p, i)=>(
-                                        <tbody>
-                                            <tr>
-                                            <th scope="row">{i}</th>
-                                            <td>
-                                                <img className='col-md-4' src={`${process.env.REACT_APP_API}/product/photo/${p?._id}`} alt={p?.name} style={{width:"50px" , height:"50px" , objectFit:"cover", borderRadius:"10px"}} />
-                                                
-                                            </td>
-                                            <td><p className=''>{p.name}</p></td>
-                                            <td>{p?.price?.toLocaleString("en-us", {style: "currency", currency:"USD"})}</td>
-                                            <td><input 
-                                                className=' form-control' 
-                                                style={{width:"90px"}} 
-                                                type="number" 
-                                                defaultValue={p?.itemStock ? p?.itemStock : 1}
-                                                min="1"
-                                                max="10"
-                                                onChange={(e)=> updateStock(e.target.value, p._id)}
-
-                                                 /></td>
-                                            <td>{totalItemPrice(p)}</td>
-                                            <td className='text-danger text-center'><RiDeleteBin6Line onClick={()=> removeFromCart(p._id)} className=' pointer'/></td>
-                                            </tr>
-                                        </tbody>
-                                    ))}
-                                    </table>
-                                </div>
-
-                                {/* {cart?.map((p, i)=>(
-                                    <div key={i} className="card mb-3">
-                                        <div className="row g-0">
-                                                <img className='col-md-4 rounded-start' src={`${process.env.REACT_APP_API}/product/photo/${p?._id}`} alt={p?.name} style={{width:"150px" , height:"150px" , objectFit:"cover", marginLeft:"-12px", borderRopRightRadius:"0px"}} />
-                                            <div className="col-md-7">
-                                                <div className="col-md-8">
-                                                    <div className="card-body ms-2">
-                                                        <h5 className="card-title">
-                                                            {p?.price?.toLocaleString("en-us", {style: "currency", currency:"USD"})}
-                                                        </h5>
-                                                        <p className='card-text'>
-                                                            {`${p?.description?.substring(0, 50)}...`}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-1">
-                                                <p className=" float-right">
-                                                    <p onClick={()=> removeFromCart(p._id)} className=" float-end text-center my-auto pointer text-danger">Remove</p>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))} */}
+                        <div className="col-md-9">
+                            <div className="row align-middle">
+                                {cart?.map((p, i)=>(
+                                    <ProductCartBody
+                                        key={i}
+                                        p={p}
+                                        removeFromCart={removeFromCart}
+                                        updateStock={updateStock}
+                                        totalItemPrice={totalItemPrice}
+                                 />
+                                ))}
+                                
                             </div>
                         </div>
-
-                        <div className="col-md-4">
-                            <h4>Your Cart Summary</h4>
-                            Total / Address / Payments <hr />
-                            <h6>SubTotal: {cartTotal()}</h6>
-                            {auth?.user?.address ? (
-                                <>
-                                    <div className="mb-3">
-                                        <h4>Address</h4>
-                                        <h5>{auth?.user?.address}</h5>
-                                    </div>
-                                    <button onClick={()=> navigate("/dashboard/user/profile")} className='btn btn-outline-primary btn-sm'>Update Address</button>
-                                </>
-                            ) : (
-                                <div className="mb-3">
-                                    {auth?.token ? (
-                                        <button onClick={()=> navigate("/dashboard/user/profile")} className="btn btn-outline-dark btn-sm mt-2"> Add Delivery Address </button>
-                                    ) : (
-                                        <button onClick={()=> navigate("/login", {state: "/cart",})} className='btn btn-outline-danger btn-sm' >Login to Checkout</button>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-
+                        <UserCartSidebar cartTotal={cartTotal} />
                     </div>
                 </div>
             ) 

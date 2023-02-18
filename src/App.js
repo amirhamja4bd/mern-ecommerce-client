@@ -24,6 +24,7 @@ import ProductView from './pages/ProductView';
 import CategoriesList from './pages/CategoriesList';
 import CategoryView from './pages/CategoryView';
 import Cart from './pages/Cart';
+import AdminOrders from './pages/admin/AdminOrders';
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
             <Route path='admin/product' element={<Product/>} />
             <Route path='admin/products' element={<AdminProducts/>} />
             <Route path='admin/product/update/:slug' element={<AdminProductUpdateDelete/>} />
+            <Route path='admin/orders' element={<AdminOrders/>} />
           </Route>
 
           <Route path='*' element={<PageNotFound/>} />

@@ -127,7 +127,7 @@ const Menu = () => {
                         </NavLink>
                         </li>
                         <li>
-                        <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role === 1 ? "admin-profile" : "user-profile"
+                        <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role === 1 ? "admin-profile" : "user/profile"
                             }`}> Profile </NavLink>
                         </li>
                             
