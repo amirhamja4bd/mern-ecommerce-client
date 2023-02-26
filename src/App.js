@@ -25,6 +25,7 @@ import CategoriesList from './pages/CategoriesList';
 import CategoryView from './pages/CategoryView';
 import Cart from './pages/Cart';
 import AdminOrders from './pages/admin/AdminOrders';
+import AdminProfile from './pages/admin/Profile';
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
            {/* Admin Route */}
           <Route path='/dashboard' element={<AdminRoute/>}>
             <Route path='admin' element={<AdminDashboard/>} />
+            <Route path='admin/profile' element={<AdminProfile/>} />
             <Route path='admin/category' element={<Category/>} />
             <Route path='admin/product' element={<Product/>} />
             <Route path='admin/products' element={<AdminProducts/>} />

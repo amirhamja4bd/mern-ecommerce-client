@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import UserMenu from '../../components/nav/UserMenu';
+import AdminMenu from '../../components/nav/AdminMenu';
 import { useAuth } from '../../context/Auth';
 
-const Profile = () => {
+const AdminProfile = () => {
 
     const [auth, setAuth ] = useAuth()
 
@@ -48,7 +48,7 @@ const Profile = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3">
-                        <UserMenu/>
+                        <AdminMenu/>
                     </div>
                     <div className=" col-md-9">
                         <div className="p-3 mt-2 mb-2 h4 bg-light">Profile</div>
@@ -121,4 +121,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default AdminProfile;

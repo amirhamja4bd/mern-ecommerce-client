@@ -39,18 +39,28 @@ const AdminProducts = () => {
                                 
                                 <div className="col-sm-4 col-md-3 my-2 ">
                                     
-                                        <div class="card shadow ">
+                                        <div class="card shadow " style={{minHeight:"300px"}}>
                                             
                                                 <img
-
                                                     src={`${process.env.REACT_APP_API}/product/photo/${p._id}`}
 
                                                     alt={p.name}
                                                     className="img img-fluid rounded-top"
+                                                    style={{ height: "120px", objectFit: "cover"}}
                                                 />
                                             <div class="card-body">
-                                            <h5 class="card-title">{p.name}</h5>
-                                            <p className="card-text">{p?.description?.substring(0, 60)}{p?.description?.length>60 ? ('...'): ('')}</p>
+                                            <h6 className="card-text">{p?.name?.substring(0, 40)}{p?.name?.length>40 ? ('...'): ('')}</h6>
+                                            {/* <p className="card-text">{p?.description?.substring(0, 60)}{p?.description?.length>60 ? ('...'): ('')}</p> */}
+                                            <h5 className="">
+                                                {p?.price?.toLocaleString("en-US", {
+                                                    style: "currency",
+                                                    currency: "USD",
+                                                })}
+                                                {/* {p?.price?.toLocaleString("en-BD", {
+                                                    style: "currency",
+                                                    currency: "BDT",
+                                                })} */}
+                                            </h5>
 
                                             <Link className='nav-link' key={p._id} to={`/dashboard/admin/product/update/${p.slug}`}>
                                                 <button className='btn btn-primary btn-sm'>Update & Delete</button>

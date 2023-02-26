@@ -149,7 +149,7 @@ const Shop = () => {
                         <h2 className='p-3 mt-2 mb-2 h4 bg-light text-center'>
                             {products?.length} Products
                         </h2>
-                        <div className="row shop" style={{ height: "100vh", overflow: "scroll" }}>
+                        <div className="row shop" style={{ height: "100vh"}}>
                             {products?.map((p)=>(
                                 <div className='col-md-4' key={p._id}>
                                     <ProductCard p={p}/>
@@ -161,7 +161,7 @@ const Shop = () => {
                                 <div className='divider'>
                                 <div class="dividermask"></div> 
                                 <button
-                                    className="btn btn-warning btn-lg col-md-6 pt-1 text-center"
+                                    className="btn btn-light btn-lg col-md-6 pt-1 text-center"
                                     disabled={loading}
                                     onClick={(e) => {
                                     e.preventDefault();

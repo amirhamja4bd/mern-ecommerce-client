@@ -4,7 +4,7 @@ import { useAuth } from '../../context/Auth';
 import useCategory from '../hooks/useCategory';
 import SearchForm from '../forms/SearchForm';
 import { Badge } from 'antd';
-import "./menu.css";
+
 import { useCart } from '../../context/Cart';
 
 const Menu = () => {
@@ -80,6 +80,7 @@ const Menu = () => {
                         showZero={true}
                     >
                         <NavLink className="nav-link " aria-current="page" to="/cart">
+                        <i className="fa-solid fa-cart-shopping"></i>
                             CART
                         </NavLink>
                     </Badge>
@@ -127,7 +128,7 @@ const Menu = () => {
                         </NavLink>
                         </li>
                         <li>
-                        <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role === 1 ? "admin-profile" : "user/profile"
+                        <NavLink className="nav-link" to={`/dashboard/${auth?.user?.role === 1 ? "admin/profile" : "user/profile"
                             }`}> Profile </NavLink>
                         </li>
                             

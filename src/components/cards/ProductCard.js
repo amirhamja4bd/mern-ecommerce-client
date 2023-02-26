@@ -35,7 +35,7 @@ const ProductCard = ({p}) => {
 
     return (
         <div>
-            <div className="card mx-2 mb-5 my-card">
+            <div className="card mx-2 mb-4 my-card">
             <Badge.Ribbon text={`${p?.sold} sold`} color="red">
                 <Badge.Ribbon
                 text={`${p?.stock >= 1
@@ -53,10 +53,10 @@ const ProductCard = ({p}) => {
                     />
                 </Badge.Ribbon>
             </Badge.Ribbon>
-                <div className=' card-body px-3 pb-0'>
-                    <h5>{p?.name}</h5>
-                    <p className="card-text">{p?.description?.substring(0, 60)}{p?.description?.length>60 ? ('...'): ('')}</p>
-                    <h4 className="">
+                <div className=' card-body px-3 pb-0 '>
+                    <h6 className="card-text">{p?.name?.substring(0, 40)}{p?.name?.length>40 ? ('...'): ('')}</h6>
+                    {/* <p className="card-text">{p?.description?.substring(0, 60)}{p?.description?.length>60 ? ('...'): ('')}</p> */}
+                    <h5 className="">
                         {p?.price?.toLocaleString("en-US", {
                             style: "currency",
                             currency: "USD",
@@ -65,7 +65,7 @@ const ProductCard = ({p}) => {
                             style: "currency",
                             currency: "BDT",
                         })} */}
-                    </h4>
+                    </h5>
                 </div>
                     <div className=' p-3 d-flex justify-content-between'>
                         <button onClick={() => navigate(`/product/${p.slug}`)} className='btn btn-primary ' style={{fontSize:"14px"}}>View Product</button>

@@ -7,7 +7,6 @@ import {
   FaRegClock,
   FaCheck,
   FaTimes,
-  FaTruckMoving,
   FaWarehouse,
   FaRocket,
 } from "react-icons/fa";
